@@ -4,13 +4,12 @@ package nats
 import (
 	"context"
 	"strings"
+	"sync"
 
 	"github.com/divisionone/go-micro/broker"
 	"github.com/divisionone/go-micro/broker/codec/json"
 	"github.com/divisionone/go-micro/cmd"
 	"github.com/nats-io/nats"
-
-	"sync"
 )
 
 type nbroker struct {
@@ -115,6 +114,7 @@ func (n *nbroker) Connect() error {
 
 func (n *nbroker) Disconnect() error {
 	n.conn.Close()
+	n.conn = nil
 	return nil
 }
 
